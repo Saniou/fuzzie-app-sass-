@@ -35,7 +35,7 @@ export const HeroParallax = ({
     springConfig
   )
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -1000]),
+    useTransform(scrollYProgress, [0, 1], [0, -500]),
     springConfig
   )
   const rotateX = useSpring(
@@ -51,7 +51,7 @@ export const HeroParallax = ({
     springConfig
   )
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
+    useTransform(scrollYProgress, [0, 0.2], [-300, 500]),
     springConfig
   )
   return (
