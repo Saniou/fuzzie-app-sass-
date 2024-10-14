@@ -12,7 +12,7 @@ LR.registerBlocks(LR)
 const UploadCareButton = ({ onUpload }: Props) => {
   const router = useRouter()
   const ctxProviderRef = useRef<
-    typeof LR.UploadCtxProvider.prototype & LR.UploadCtxProvider
+    (typeof LR.UploadCtxProvider.prototype & LR.UploadCtxProvider) | null
   >(null)
 
   useEffect(() => {
@@ -22,25 +22,34 @@ const UploadCareButton = ({ onUpload }: Props) => {
         router.refresh()
       }
     }
-    ctxProviderRef.current.addEventListener('file-upload-success', handleUpload)
-  }, [])
+
+    if (ctxProviderRef.current) {
+      ctxProviderRef.current.addEventListener(
+        'file-upload-success',
+        handleUpload
+      )
+    }
+
+    return () => {
+      if (ctxProviderRef.current) {
+        ctxProviderRef.current.removeEventListener(
+          'file-upload-success',
+          handleUpload
+        )
+      }
+    }
+  }, [onUpload, router])
 
   return (
     <div>
-      <lr-config
-        ctx-name="my-uploader"
-        pubkey="2b7bec25d3d43c6446b8"
-      />
+      <lr-config ctx-name="my-uploader" pubkey="2b7bec25d3d43c6446b8" />
 
       <lr-file-uploader-regular
         ctx-name="my-uploader"
         css-src={`https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css`}
       />
 
-      <lr-upload-ctx-provider
-        ctx-name="my-uploader"
-        ref={ctxProviderRef}
-      />
+      <lr-upload-ctx-provider ctx-name="my-uploader" ref={ctxProviderRef} />
     </div>
   )
 }
