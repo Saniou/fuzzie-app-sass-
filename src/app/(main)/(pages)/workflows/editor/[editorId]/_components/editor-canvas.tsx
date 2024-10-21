@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactFlow from 'reactflow'
-import 'reactflow/dist/style';
+import 'reactflow/dist/style.css';
 import { EditorNodeType } from '@/lib/types';
 import { useEditor } from '@/providers/editor-provider';
 
